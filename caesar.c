@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
 #include <cs50.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 //#define MSG_LEN strlen(plain_text);
@@ -12,7 +12,6 @@ char *get_msg();
 
 int main(int argc, string argv[])
 {
-    static char p_text [];
     char *msg_ptr = 0;
     int i = 0;
     int len = 0;
@@ -21,10 +20,20 @@ int main(int argc, string argv[])
     msg_ptr = get_msg();
     len = strlen(msg_ptr);
 
+    char p_text [len];
+
     for (i = 0; i < len; i++)
     {
         p_text [i] = *(msg_ptr + i);
     }
+
+    for (i = 0; i < len; i++)
+    {
+        printf("%c", p_text[i]);
+    }
+
+    printf("\n");
+    printf("%d\n", argc);
 
     return 0;
 }
