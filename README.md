@@ -14,3 +14,5 @@ http://asciichart.com/
 
 https://reference.cs50.net/
 
+https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B
+
