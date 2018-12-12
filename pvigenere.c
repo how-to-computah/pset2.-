@@ -7,14 +7,14 @@
 #define U_ASCII 65
 #define L_ASCII 97
 
-bool why_no(char *no_nums[]);
+bool why_no();
 int why_function();
 int why_another();
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     int i, j, meaningful_variable, key_int, ascii_int;
-    char* key_char = K_CHAR;
-    
+    char *key_char = K_CHAR;
+
 
     bool number = why_no(&argv[1]);
 
@@ -31,8 +31,8 @@ int main(int argc, char* argv[])
 //----------------------------------------------------------------------------------------------------------------------------------
     for (i = 0, j = 0; i < strlen(plain_text); i++, j++)
     {
-         //End of key index, reset.
-        if(j == strlen(key_char))
+        //End of key index, reset.
+        if (j == strlen(key_char))
         {
             j = 0;
         }
@@ -60,33 +60,37 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
-int why_function(int why_tho, char* key_char)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//----------------------------------------------------------------------------------------------------------------------------------
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+int why_function(int why_tho, char *ciph_char)
 {
     int gimmie_key;
-    
+
     //Get the right integer value dependent on the key case.
-    if (islower(*(key_char + why_tho)))
+    if (islower(*(ciph_char + why_tho)))
     {
-        gimmie_key = *(key_char + why_tho)- L_ASCII;
+        gimmie_key = *(ciph_char + why_tho) - L_ASCII;
     }
     else
     {
-        gimmie_key = *(key_char + why_tho)- U_ASCII;
+        gimmie_key = *(ciph_char + why_tho) - U_ASCII;
     }
 
     return gimmie_key;
 
 }
-
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//----------------------------------------------------------------------------------------------------------------------------------
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int why_another(meaningful_variable)
 {
     int good_job;
-    
+
     //Tell me I did a good job.
     if (islower(meaningful_variable))
     {
-         good_job = L_ASCII;
+        good_job = L_ASCII;
     }
     else
     {
@@ -95,16 +99,20 @@ int why_another(meaningful_variable)
 
     return good_job;
 }
-
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//----------------------------------------------------------------------------------------------------------------------------------
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 bool why_no(char *no_nums[])
 {
     for (char **arg = no_nums; *arg; ++arg)
-    { // for argv[1]
+    {
+        // for argv[1]
         for (char *x = *arg; *x; ++x)
-        { // for each character in argv[1]
+        {
+            // for each character in argv[1]
             if (isdigit(*x))
             {
-            return true;
+                return true;
             }
         }
     }
