@@ -7,7 +7,7 @@
 #define U_ASCII 65
 #define L_ASCII 97
 
-bool why_no(char *argv[]);
+bool why_no(char *no_nums[]);
 int why_function();
 int why_another();
 int main(int argc, char* argv[])
