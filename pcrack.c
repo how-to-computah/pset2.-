@@ -17,12 +17,12 @@ int main(int argc, char *argv[])
         exit(1);
     }
     // Get the hashed password from argv[1]
-    /*
-    If you want it the hard way.
-    char *hashed_pw = hash(*(&argv[1]));
-    */
 
-    hashed_pw = *(&argv[1]);
+    //If you want it the hard way.
+    char *hashed_pw = *hash(*(&argv[1]));
+
+
+    //hashed_pw = *(&argv[1]);
 
     printf("%s\n", hashed_pw);
 
@@ -33,18 +33,17 @@ return 0;
 //----------------------------------------------------------------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-/*
-char **hash(char *hash_MD5[])
+
+char **hash(char *hash_DES[])
 {
-    for (char **arg = hash_MD5; *arg; ++arg)
+    for (char **arg = hash_DES; *arg; ++arg)
     {
         int i;
         for (i = 0; i < strlen(*arg); i++)
         {
-            hash_MD5[i] = (*arg + i);
+            hash_DES[i] = (*arg + i);
         }
     }
-    return hash_MD5;
+    return hash_DES;
 }
 
-*/
