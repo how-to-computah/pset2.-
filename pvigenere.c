@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     if ((argc - 1) > 1 || (argv[1] == NULL) || number == true)
     {
         printf("We dont take kindly to that 'round here.\n");
-        exit(0);
+        exit(1);
     }
     // Get message to be encrypted from user.
     plain_text = get_string("plaintext:  ");
