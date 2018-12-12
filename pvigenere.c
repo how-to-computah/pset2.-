@@ -3,89 +3,109 @@
 #include <stdio.h>
 #include <string.h>
 
-#define K_INT atoi(argv[argc - 1])
 #define K_CHAR argv[argc - 1]
-#define ASCII 65
+#define U_ASCII 65
+#define L_ASCII 97
 
-char *get_msg();
-
-int main(int argc, string argv[])
+bool why_no(char *argv[]);
+int why_function();
+int why_another();
+int main(int argc, char* argv[])
 {
-    char *msg_ptr = 0;
-    int i, c, len, key_len = 0;
-    int key_int = K_INT;
+    int i, j, meaningful_variable, key_int, ascii_int;
     char* key_char = K_CHAR;
+    char* plain_text = 0;
+    bool number;
 
-    key_len = strlen(K_CHAR);
-    for (i = 0; i < key_len; i++)
-    {
-        printf("%c",*(key_char + i));
-    }
+    number = why_no(&argv[1]);
 
-// We gots no key, get outta here!!
-    if (argv[1] == NULL)
+    if ((argc - 1) > 1 || (argv[1] == NULL) || number == true)
     {
-        exit(1);
+        printf("We dont take kindly to that 'round here.\n");
+        exit(0);
     }
     // Get message to be encrypted from user.
-    msg_ptr = get_msg();
-    len = strlen(msg_ptr);
+    plain_text = get_string("plaintext:  ");
 
     printf("ciphertext: ");
 
-    for (i = 0; i < len; i++)
+//----------------------------------------------------------------------------------------------------------------------------------
+    for (i = 0, j = 0; i < strlen(plain_text); i++, j++)
     {
-        // Are you a letter?
-        if (isalpha(*(msg_ptr + i)))
+         //End of key index, reset.
+        if(j == strlen(key_char))
         {
-            if (islower(*(msg_ptr + i)))
-                // A = 65 ; Z = 90
-            {
-                toupper(*(msg_ptr +i));
-                //do something.
-
-            }
-            else
-                // a = 97 ; z = 122
-            {
-                //do something.
-            }
-            // wrap em.
-            if (((*(msg_ptr + i) - ASCII) + key_int) > 26)
-            {
-                // c = (p + k) % 26
-               c = ((((*(msg_ptr + i) - ASCII) + key_int) % 26) + ASCII);
-
-                printf("%c", c);
-            }
-            // just add to em.
-            else
-            {
-                printf("%c", (*(msg_ptr + i) + key_int));
-            }
-
+            j = 0;
         }
-        // Guess not, we won't mess with you.
+
+        meaningful_variable = *(plain_text + i);
+
+        key_int = why_function(j, key_char);
+
+        ascii_int = why_another(meaningful_variable);
+
+        // Are you a letter?
+        if (isalpha(meaningful_variable))
+        {
+            meaningful_variable = (((meaningful_variable - ascii_int) + key_int) % 26) + ascii_int;
+            plain_text[i] = meaningful_variable;
+        }
         else
         {
-            printf("%c", (*(msg_ptr + i)));
+            //Not a letter, keep the key index the same for next iteration.
+            j -= 1;
         }
-
     }
 
-    printf("\n");
+    printf("%s\n", plain_text);
 
     return 0;
 }
 
-char *get_msg()
+int why_function(int j, char* key_char)
 {
-    static char *plain_text = "";
-    int len = 0;
+    int got_key;
+    //Get the right integer value dependent on the key case.
+    if (islower(*(key_char +j)))
+    {
+        got_key = *(key_char + j)- L_ASCII;
+    }
+    else
+    {
+        got_key = *(key_char + j)- U_ASCII;
+    }
 
-    plain_text = get_string("plaintext:  ");
+    return got_key;
 
-    len = strlen(plain_text);
+}
 
-    return plain_text;
+int why_another(meaningful_variable)
+{
+    int good_job;
+    //Tell me I did a good job.
+    if (islower(meaningful_variable))
+    {
+         good_job = L_ASCII;
+    }
+    else
+    {
+        good_job = U_ASCII;
+    }
+
+    return good_job;
+}
+
+bool why_no(char *argv[])
+{
+    for (char **arg = argv; *arg; ++arg)
+    { // for each arg
+        for (char *x = *arg; *x; ++x)
+        { // for each character
+            if (isdigit(*x))
+            {
+            return true;
+            }
+        }
+    }
+    return false;
 }
