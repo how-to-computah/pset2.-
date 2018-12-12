@@ -16,3 +16,4 @@ https://reference.cs50.net/
 
 https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B
 
+https://ftp.gnu.org/old-gnu/Manuals/glibc-2.2.3/html_chapter/libc_32.html
