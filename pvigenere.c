@@ -14,10 +14,9 @@ int main(int argc, char* argv[])
 {
     int i, j, meaningful_variable, key_int, ascii_int;
     char* key_char = K_CHAR;
-    char* plain_text = 0;
-    bool number;
+    
 
-    number = why_no(&argv[1]);
+    bool number = why_no(&argv[1]);
 
     if ((argc - 1) > 1 || (argv[1] == NULL) || number == true)
     {
@@ -25,7 +24,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
     // Get message to be encrypted from user.
-    plain_text = get_string("plaintext:  ");
+    char *plain_text = get_string("plaintext:  ");
 
     printf("ciphertext: ");
 
@@ -62,26 +61,28 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-int why_function(int j, char* key_char)
+int why_function(int why_tho, char* key_char)
 {
-    int got_key;
+    int gimmie_key;
+    
     //Get the right integer value dependent on the key case.
-    if (islower(*(key_char +j)))
+    if (islower(*(key_char + why_tho)))
     {
-        got_key = *(key_char + j)- L_ASCII;
+        gimmie_key = *(key_char + why_tho)- L_ASCII;
     }
     else
     {
-        got_key = *(key_char + j)- U_ASCII;
+        gimmie_key = *(key_char + why_tho)- U_ASCII;
     }
 
-    return got_key;
+    return gimmie_key;
 
 }
 
 int why_another(meaningful_variable)
 {
     int good_job;
+    
     //Tell me I did a good job.
     if (islower(meaningful_variable))
     {
@@ -95,9 +96,9 @@ int why_another(meaningful_variable)
     return good_job;
 }
 
-bool why_no(char *argv[])
+bool why_no(char *no_nums[])
 {
-    for (char **arg = argv; *arg; ++arg)
+    for (char **arg = no_nums; *arg; ++arg)
     { // for argv[1]
         for (char *x = *arg; *x; ++x)
         { // for each character in argv[1]
