@@ -98,9 +98,9 @@ int why_another(meaningful_variable)
 bool why_no(char *argv[])
 {
     for (char **arg = argv; *arg; ++arg)
-    { // for each arg
+    { // for argv[1]
         for (char *x = *arg; *x; ++x)
-        { // for each character
+        { // for each character in argv[1]
             if (isdigit(*x))
             {
             return true;
