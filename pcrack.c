@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <crypt.h>
 
 #define _XOPEN_SOURCE
 
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
     char salt [3];
     char *user_hash;
     int index = 0;
-    
+
     // Check to see if we even need to run.
     if ((argc - 1) > 1 || (argv[1] == NULL))
     {
@@ -34,10 +35,13 @@ int main(int argc, char *argv[])
     // Don't ever do this again.
     strncpy(salt, (user_hash = parsley(hashed_pw, index)), 2);
     salt[2] = '\0'; // strncpy doen't add the NULL terminator.
-    
+
     //remove the salt from the hash.
     index = 2;
     user_hash = parsley(hashed_pw, index);
+
+    char *force_hash = crypt("rofl", "50");
+    printf("%s\n", force_hash);
 
     printf("%s\n", user_hash);
     printf("%s\n", salt);
@@ -63,20 +67,30 @@ char *parsley(char *cmd_line, int index)
     static char hash [16];
     for (char *col = cmd_line; *col; ++col)
     {
-        if (*col == ':')
-        {
+        //if (*col == ':')
+        //{
             // index past the colon or salt.
-            ++col;
+            //++col;
             if (index == 2)
             {
                 col += 2;
+                for (int i = 0; *col; ++col, i++)
+                {
+                    hash[i] = (*col);
+                }
+                break;
             }
-            for (int i = 0; *col; ++col, i++)
+            else
             {
-                hash[i] = (*col);
+                for (int i = 0; i < 2; ++col, i++)
+                {
+                    hash[i] = (*col);
+                }
+                break;
             }
-            break;
-        }
+
+            //break;
+        //}
     }
     return hash;
 }
