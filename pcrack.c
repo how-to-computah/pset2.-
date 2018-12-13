@@ -18,7 +18,7 @@ brute force up to a length of 5 or until the hash matches the one provide with t
 
 int main(int argc, char *argv[])
 {
-
+    char salt [3];
     // Check to see if we even need to run.
     if ((argc - 1) > 1 || (argv[1] == NULL))
     {
@@ -29,10 +29,16 @@ int main(int argc, char *argv[])
     char *hashed_pw = *(&argv[1]);
 
     // Don't ever do this again.
-    char *user_hash = parsley(hashed_pw);
+    int index = 0;
+    char *user_hash = parsley(hashed_pw, index);
+    strncpy(salt, user_hash, 2);
+    salt[2] = '\0'; // strncpy doen't add the NULL terminator.
+    //remove the salt from the hash.
+    index = 2;
+    user_hash = parsley(hashed_pw, index);
 
     printf("%s\n", user_hash);
-
+    printf("%s\n", salt);
     /*
     for(; ;)
     {
@@ -50,19 +56,25 @@ return 0;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //----------------------------------------------------------------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-char *parsley(char *cmd_line)
+char *parsley(char *cmd_line, int index)
 {
-    static char what [64];
+    static char hash [16];
     for (char *col = cmd_line; *col; ++col)
     {
         if (*col == ':')
         {
+            // index past the colon or salt.
             ++col;
+            if (index == 2)
+            {
+                col += 2;
+            }
             for (int i = 0; *col; ++col, i++)
             {
-                what[i] = (*col);
+                hash[i] = (*col);
             }
+            break;
         }
     }
-    return what;
+    return hash;
 }
