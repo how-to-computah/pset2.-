@@ -19,6 +19,9 @@ brute force up to a length of 5 or until the hash matches the one provide with t
 int main(int argc, char *argv[])
 {
     char salt [3];
+    char *user_hash;
+    int index = 0;
+    
     // Check to see if we even need to run.
     if ((argc - 1) > 1 || (argv[1] == NULL))
     {
@@ -29,10 +32,9 @@ int main(int argc, char *argv[])
     char *hashed_pw = *(&argv[1]);
 
     // Don't ever do this again.
-    int index = 0;
-    char *user_hash = parsley(hashed_pw, index);
-    strncpy(salt, user_hash, 2);
+    strncpy(salt, (user_hash = parsley(hashed_pw, index)), 2);
     salt[2] = '\0'; // strncpy doen't add the NULL terminator.
+    
     //remove the salt from the hash.
     index = 2;
     user_hash = parsley(hashed_pw, index);
