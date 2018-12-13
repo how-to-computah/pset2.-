@@ -5,7 +5,16 @@
 
 #define _XOPEN_SOURCE
 
-char **hash();
+char *parsley();
+
+/*Get the command line arugment.
+parse the string.
+char *crypt (const char *key, const char *salt);
+    Upon successful completion, crypt() returns a pointer to the encoded string.
+    The first two characters of the returned value are those of the salt argument.
+    Otherwise it returns a null pointer and sets errno to indicate the error.
+brute force up to a length of 5 or until the hash matches the one provide with the key you passed to it.
+*/
 
 int main(int argc, char *argv[])
 {
@@ -17,33 +26,43 @@ int main(int argc, char *argv[])
         exit(1);
     }
     // Get the hashed password from argv[1]
+    char *hashed_pw = *(&argv[1]);
 
-    //If you want it the hard way.
-    char *hashed_pw = *hash(*(&argv[1]));
+    // Don't ever do this again.
+    char *user_hash = parsley(hashed_pw);
 
+    printf("%s\n", user_hash);
 
-    //hashed_pw = *(&argv[1]);
+    /*
+    for(; ;)
+    {
+        if (strcmp(user_hash, force_hash) == 0)
+        {
+            printf("%s\n", force_hash);
 
-    printf("%s\n", hashed_pw);
-
+            break;
+        }
+    }
+    */
 return 0;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //----------------------------------------------------------------------------------------------------------------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-char **hash(char *hash_DES[])
+char *parsley(char *cmd_line)
 {
-    for (char **arg = hash_DES; *arg; ++arg)
+    static char what [64];
+    for (char *col = cmd_line; *col; ++col)
     {
-        int i;
-        for (i = 0; i < strlen(*arg); i++)
+        if (*col == ':')
         {
-            hash_DES[i] = (*arg + i);
+            ++col;
+            for (int i = 0; *col; ++col, i++)
+            {
+                what[i] = (*col);
+            }
         }
     }
-    return hash_DES;
+    return what;
 }
-
