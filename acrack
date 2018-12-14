@@ -1,0 +1,75 @@
+//Brute force a DES encrypted password containing only valid alphabetical characters and at max 5 character length.
+
+#define _XOPEN_SOURCE
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+char aloop();
+//usage: ./crack <hash>
+int main(int argc, string argv[])
+{
+    //Check for proper number of arguments
+    if (argc != 2)
+    {
+        printf("Must enter one hash to crack.\n");
+        return 1;
+    }
+
+    string hash = argv[1];
+    //Pulling the salt from the user input.
+    char salt [3] = {hash[0], hash[1], '\0'};
+    char guess[6] = {'\0', '\0', '\0', '\0', '\0', '\0'};
+    string hashguess = "A";
+    int i = 1;
+
+    while (strcmp(hashguess, hash) != 0)
+    {
+        //increments characters in guess string.  Starting with a string with just one character.
+        if (i >= 7890481 && i % 7890481 == 0)
+        {
+            guess[4] = aloop(i / 7890481);
+        }
+
+
+        if (i >= 148877 && i % 148877 == 0)
+        {
+            guess[3] = aloop(i / 148877);
+        }
+
+        if (i >= 2809 && i % 2809 == 0)
+        {
+            guess[2] = aloop(i / 2809);
+        }
+        if (i >= 53 && i % 53 == 0)
+        {
+            guess[1] = aloop(i / 53);
+        }
+        guess[0] = aloop(i % 53);
+        //Check if we guessed correctly.
+        hashguess = crypt(guess, salt);
+        i++;
+    }
+    printf("%s\n", guess);
+
+}
+
+char aloop(int aindex)
+{
+    //Returns a valid alphabetical character
+    aindex = aindex % 53;
+    if (aindex >= 1 && aindex < 27)
+    {
+        return 64 + aindex;
+    }
+
+    else if (aindex >= 27 && aindex < 53)
+    {
+        return 70 + aindex;
+    }
+    else
+    {
+        return 0;
+    }
+}
